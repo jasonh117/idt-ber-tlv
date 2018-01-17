@@ -13,4 +13,8 @@ $(function() {
             });
         }
     });
+
+    $('#cancel-button').click(function() {
+        window.location.reload();
+    });
 });
