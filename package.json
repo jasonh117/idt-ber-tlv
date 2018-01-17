@@ -1,5 +1,5 @@
 {
-  "name": "idt-ber-tlv",
+  "name": "idt-tlv",
   "version": "0.0.0",
   "private": true,
   "scripts": {
