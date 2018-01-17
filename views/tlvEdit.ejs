@@ -1,0 +1,15 @@
+<%- include('header.ejs'); %>
+
+<div class="container">
+    <h1><%= tlv.tag.toString('hex').toUpperCase() %></h1>
+    <form>
+        <div class="form-group row">
+            <label for="tlvName" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="tlvName" value="blah">
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- include('footer.ejs'); %>

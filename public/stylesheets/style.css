@@ -1,8 +1,43 @@
 body {
-  padding: 50px;
+  padding-top: 5rem;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.main-container {
+  text-align: center;
+}
+
+.table-hover {
+  cursor: pointer;
+}
+
+.submit-button {
+  width: 100px;
+  vertical-align: middle;
+  margin-left: 10rem;
+}
+
+.tag-name {
+  display: inline-block;
+  margin: 0;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#delete-button {
+  width: 100px;
+  vertical-align: middle;
+  margin-left: 2rem;
+}
+
+.main-button-group {
+  margin-bottom: 1rem;
 }

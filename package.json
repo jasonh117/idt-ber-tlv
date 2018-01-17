@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "migrate": "db-migrate up"
   },
   "dependencies": {
     "better-sqlite3": "^4.0.3",

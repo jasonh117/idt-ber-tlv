@@ -1,0 +1,85 @@
+<%- include('header.ejs'); %>
+
+<div class="container">
+    <form class="list-group" method="post" >
+        <div class="title-row">
+            <h1 class="tag-name"><%= tlv.tag.toString('hex').toUpperCase() %></h1>
+            <button type="submit" class="btn btn-primary submit-button">Submit</button>
+            <button id="delete-button" class="btn btn-primary">Delete</button>
+        </div>
+        <div class="form-group row">
+            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input name="name" type="text" class="form-control" id="inputName" value="<%= tlv.name %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputFormat" class="col-sm-2 col-form-label">Format</label>
+            <div class="col-sm-10">
+                <input name="format" type="text" class="form-control" id="inputFormat" value="<%= tlv.format %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputLength" class="col-sm-2 col-form-label">Length</label>
+            <div class="col-sm-10">
+                <input name="length" type="text" class="form-control" id="inputLength" value="<%= tlv.length %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <input name="description" type="text" class="form-control" id="inputDescription" value="<%= tlv.description %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComments" class="col-sm-2 col-form-label">Comments</label>
+            <div class="col-sm-10">
+                <input name="comments" type="text" class="form-control" id="inputComments" value="<%= tlv.comments %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputDefaultValue" class="col-sm-2 col-form-label">Default Value</label>
+            <div class="col-sm-10">
+                <input name="defaultValue" type="text" class="form-control" id="inputDefaultValue" value="<%= tlv.defaultValue %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputDetailed" class="col-sm-2 col-form-label">Detailed</label>
+            <div class="col-sm-10">
+                <input name="detailed" type="text" class="form-control" id="inputDetailed" value="<%= tlv.detailed %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputTagOwner" class="col-sm-2 col-form-label">Tag Owner</label>
+            <div class="col-sm-10">
+                <input name="tagOwner" type="text" class="form-control" id="inputTagOwner" value="<%= tlv.tagOwner %>">
+            </div>
+        </div>
+        <div class="form-group row form-check form-check-inline">
+            <label for="inputIsPublic" class="col-sm-2 col-form-label">Is Public</label>
+            <div class="col-sm-10">
+                <input name="isPublic" type="checkbox" class="form-control" id="inputIsPublic" <%= (tlv.isPublic > 0) ? 'checked' : '' %>>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputModifiedAt" class="col-sm-2 col-form-label">Modified At</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="inputModifiedAt" value="<%= Date(tlv.modifiedAt).toString() %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputTimesRequested" class="col-sm-2 col-form-label">Times Requested</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="inputTimesRequested" value="<%= tlv.timesRequested %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputExist" class="col-sm-2 col-form-label">Exist in Firmware</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="inputExist" value="<%= tlv.exist > 0 ? 'Yes' : 'No' %>">
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- include('footer.ejs'); %>

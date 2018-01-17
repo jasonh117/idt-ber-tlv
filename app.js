@@ -17,12 +17,17 @@ if (res.count <= 0) {
       });
     }
   }
+  for (let i = 0x01; i <= 0x7F; i++) {
+    insert.run({
+      tag: Buffer.from([0xFF, 0xEE, i])
+    });
+  }
 }
 db.close();
 console.log('Database OK');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const tlv = require('./routes/tlv');
 
 const app = express();
 
@@ -39,7 +44,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/tlv', tlv);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

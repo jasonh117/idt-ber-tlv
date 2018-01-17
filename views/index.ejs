@@ -1,11 +1,33 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('header.ejs'); %>
+
+<div class="container main-container">
+  <div class="btn-group main-button-group" role="group" aria-label="Basic example">
+    <a class="btn btn-secondary <%= filter === 'all' ? 'active' : ''%>" href="?filter=all" role="button">All</a>
+    <a class="btn btn-secondary <%= filter === 'existing' ? 'active' : ''%>" href="?filter=existing" role="button">Existing</a>
+    <a class="btn btn-secondary <%= filter === 'empty' ? 'active' : ''%>" href="?filter=empty" role="button">Empty</a>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Tag</th>
+        <th scope="col">Name</th>
+        <th scope="col">Format</th>
+        <th scope="col">Length</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tlvs.forEach(function(tlv) { %>
+        <tr class="clickable-row" data-href="<%= 'tlv/' + tlv.tag.toString('hex') %>">
+          <td><%= tlv.tag.toString('hex').toUpperCase() %></td>
+          <td><%= tlv.name %></td>
+          <td><%= tlv.format %></td>
+          <td><%= tlv.length %></td>
+          <td><%= tlv.description %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('footer.ejs'); %>
