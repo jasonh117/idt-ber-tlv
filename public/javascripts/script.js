@@ -4,9 +4,13 @@ $(function() {
     });
 
     $('#delete-button').click(function() {
-        $.ajax({
-            url: window.location,
-            type: 'DELETE'
-        });
+        if (confirm("Are you sure you want to delete this TLV?")) {
+            $.ajax({
+                url: window.location,
+                type: 'DELETE'
+            }).then(() => {
+                window.location.reload();
+            });
+        }
     });
 });

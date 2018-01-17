@@ -26,8 +26,8 @@ exports.up = function (db) {
     detailed: { type: 'string' },
     tagOwner: { type: 'string' },
     isPublic: { type: 'boolean' },
-    createdAt: { type: 'datetime', defaultValue: Date.now() },
-    modifiedAt: { type: 'datetime', defaultValue: Date.now() },
+    createdAt: { type: 'datetime' },
+    modifiedAt: { type: 'datetime' },
     timesRequested: { type: 'int', defaultValue: 0 },
     exist: { type: 'boolean', defaultValue: 0 }
   });

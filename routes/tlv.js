@@ -1,10 +1,12 @@
 const express = require('express');
+const moment = require('moment-timezone');
 const tlvLib = require('../lib/tlv');
 const router = express.Router();
 
 router.get('/:tag', function(req, res, next) {
   try {
     const tlv = tlvLib.getOne(req.params.tag);
+    tlv.modifiedAt = moment(tlv.modifiedAt, 'x').tz('UTC').format('lll z');
     res.render('tlv', {
       title: `ID TECH TLV: ${req.params.tag.toUpperCase()}`,
       tlv,
@@ -29,7 +31,7 @@ router.post('/:tag', function(req, res, next) {
 
 router.delete('/:tag', function(req, res, next) {
   tlvLib.remove([req.params.tag]);
-  res.redirect(`/tlv/${req.params.tag}`);
+  res.end();
 });
 
 module.exports = router;
