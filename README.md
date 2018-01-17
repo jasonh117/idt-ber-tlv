@@ -1,4 +1,4 @@
-# idt-ber-tlv
+# ID TECH TLV
 Solution to managing ID TECH TLVs
 
 ## Requirements
