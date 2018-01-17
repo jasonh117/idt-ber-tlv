@@ -10,6 +10,7 @@
     "better-sqlite3": "^4.0.3",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "db-migrate": "^0.10.2",
     "db-migrate-sqlite3": "^0.2.1",
     "debug": "~2.6.9",
