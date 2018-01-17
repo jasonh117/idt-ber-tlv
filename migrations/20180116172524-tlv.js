@@ -19,7 +19,7 @@ exports.up = function (db) {
     tag: { type: 'blob', primaryKey: true },
     name: { type: 'string' },
     format: { type: 'string' },
-    length: { type: 'int' },
+    length: { type: 'string' },
     description: { type: 'string' },
     comments: { type: 'string' },
     defaultValue: { type: 'string' },
