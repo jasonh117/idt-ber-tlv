@@ -6,7 +6,7 @@ $(function() {
     $('#delete-button').click(function() {
         if (confirm("Are you sure you want to delete this TLV?")) {
             $.ajax({
-                url: window.location,
+                url: `/api${window.location.pathname}`,
                 type: 'DELETE'
             }).then(() => {
                 window.location.reload();

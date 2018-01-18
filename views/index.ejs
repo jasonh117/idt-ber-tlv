@@ -19,7 +19,7 @@
     <tbody>
       <% tlvs.forEach(function(tlv) { %>
         <tr class="clickable-row" data-href="<%= 'tlv/' + tlv.tag.toString('hex') %>">
-          <td><%= tlv.tag.toString('hex').toUpperCase() %></td>
+          <td><%= tlv.tag %></td>
           <td><%= tlv.name %></td>
           <td><%= tlv.format %></td>
           <td><%= tlv.length %></td>
