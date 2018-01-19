@@ -6,12 +6,12 @@ const tlvLib = require('../lib/tlv');
 const router = express.Router();
 nconf.argv().env();
 const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
-const visitor = ua(analyticsID);
 
 const isBytes = /^[0-9A-Fa-f]{2,}$/;
 
 router.route('/:tag')
 .all((req, res, next) => {
+  const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
   if (isBytes.test(req.params.tag.trim())) {
     const tlv = tlvLib.getOne(req.params.tag);

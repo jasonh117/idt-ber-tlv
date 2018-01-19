@@ -6,11 +6,11 @@ const error = require('../lib/error');
 const router = express.Router();
 nconf.argv().env();
 const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
-const visitor = ua(analyticsID);
 
 const isBytes = /^[0-9A-Fa-f]{2,}$/;
 
 router.get('/tlv/', (req, res, next) => {
+  const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
   let exist = 1;
   switch (req.query.filter) {
@@ -31,6 +31,7 @@ router.get('/tlv/', (req, res, next) => {
 
 router.route('/tlv/:tag')
 .all((req, res, next) => {
+  const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
   if (!isBytes.test(req.params.tag.trim()))
     throw error(400, `Tag '${req.params.tag.trim()}' is not valid.`);

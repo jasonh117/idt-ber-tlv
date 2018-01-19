@@ -5,9 +5,9 @@ const tlvLib = require('../lib/tlv');
 const router = express.Router();
 nconf.argv().env();
 const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
-const visitor = ua(analyticsID);
 
 router.get('/', (req, res, next) => {
+  const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
   let exist = 1;
   switch (req.query.filter) {
