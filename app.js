@@ -5,11 +5,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const nconf = require('nconf');
-const ua = require('universal-analytics');
 const Database = require('better-sqlite3');
-
-nconf.argv().env();
 
 const db = new Database('./db/dev.db');
 const res = db.prepare('SELECT count(*) as count from tlv').get();
@@ -35,12 +31,6 @@ if (res.count <= 0) {
 }
 db.close();
 console.log('Database OK');
-
-const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
-if (analyticsID) {
-  const visitor = ua(analyticsID);
-  visitor.pageview("/").send();
-}
 
 const index = require('./routes/index');
 const tlv = require('./routes/tlv');

@@ -1,8 +1,14 @@
 const express = require('express');
+const nconf = require('nconf');
+const ua = require('universal-analytics');
 const tlvLib = require('../lib/tlv');
 const router = express.Router();
+nconf.argv().env();
+const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
+const visitor = ua(analyticsID);
 
 router.get('/', (req, res, next) => {
+  visitor.pageview(req.originalUrl).send();
   let exist = 1;
   switch (req.query.filter) {
     case 'all':

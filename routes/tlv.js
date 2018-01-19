@@ -1,12 +1,18 @@
 const express = require('express');
+const nconf = require('nconf');
+const ua = require('universal-analytics');
 const moment = require('moment-timezone');
 const tlvLib = require('../lib/tlv');
 const router = express.Router();
+nconf.argv().env();
+const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
+const visitor = ua(analyticsID);
 
 const isBytes = /^[0-9A-Fa-f]{2,}$/;
 
 router.route('/:tag')
 .all((req, res, next) => {
+  visitor.pageview(req.originalUrl).send();
   if (isBytes.test(req.params.tag.trim())) {
     const tlv = tlvLib.getOne(req.params.tag);
     if (tlv) {
