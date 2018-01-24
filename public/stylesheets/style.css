@@ -8,14 +8,14 @@ a {
 }
 
 .main-container {
-  text-align: center;
+  text-align: left;
 }
 
 .table-hover {
   cursor: pointer;
 }
 
-.submit-button {
+#approve-button {
   width: 100px;
   vertical-align: middle;
   margin-left: 10rem;
@@ -29,10 +29,9 @@ a {
 .title-row {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
-#delete-button, #cancel-button {
+#delete-button, #cancel-button, #request-button {
   width: 100px;
   vertical-align: middle;
   margin-left: 2rem;
@@ -40,4 +39,25 @@ a {
 
 .main-button-group {
   margin-bottom: 1rem;
+}
+
+#tlv-request-list-title {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+#inputDescription, #inputComments {
+  white-space: pre-wrap;
+}
+
+#tag-status-0 {
+  color: red;
+}
+
+#tag-status-1 {
+  color: orange;
+}
+
+#tag-status-2 {
+  color: green;
 }

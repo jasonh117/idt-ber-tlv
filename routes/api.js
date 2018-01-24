@@ -1,31 +1,16 @@
 const express = require('express');
 const nconf = require('nconf');
 const ua = require('universal-analytics');
-const tlvLib = require('../lib/tlv');
-const error = require('../lib/error');
+const lib = require('../lib');
 const router = express.Router();
 nconf.argv().env();
 const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
 
-const isBytes = /^[0-9A-Fa-f]{2,}$/;
-
-router.get('/tlv/', (req, res, next) => {
+router.get('/tlv', (req, res, next) => {
   const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
-  let exist = 1;
-  switch (req.query.filter) {
-    case 'all':
-      exist = null;
-      break;
-    case 'empty':
-      exist = 0;
-      break;
-    case 'existing':
-    default:
-      exist = 1;
-  }
-  const tlvs = tlvLib.search(req.query.data, req.query.data ? null : exist);
-  tlvs.map(tlv => tlvLib.toJSON(tlv));
+  const tlvs = lib.tlv.search(req.query.data);
+  tlvs.map(tlv => lib.tlv.toJSON(tlv));
   res.json(tlvs);
 });
 
@@ -33,27 +18,71 @@ router.route('/tlv/:tag')
 .all((req, res, next) => {
   const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
-  if (!isBytes.test(req.params.tag.trim()))
-    throw error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
-  const tlv = tlvLib.getOne(req.params.tag);
+  if (!lib.tlv.isBytes.test(req.params.tag.trim()))
+    throw lib.error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
+  const tlv = lib.tlv.getOne(req.params.tag);
   if (!tlv)
-    throw error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
+    throw lib.error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
   res.locals.tlv = tlv;
   next();
 })
 .get((req, res, next) => {
-  res.json(tlvLib.toJSON(res.locals.tlv));
+  res.json(lib.tlv.toJSON(res.locals.tlv));
 })
-.post((req, res, next) => {
+.post(lib.auth.isAdmin, (req, res, next) => {
   const update = Object.assign({}, req.body);
   update.tag = req.params.tag;
   update.isPublic = req.body.isPublic ? 1 : 0;
-  tlvLib.add(update);
-  res.json(tlvLib.toJSON(tlvLib.getOne(req.params.tag)));
+  lib.tlv.add(update);
+  res.json(lib.tlv.toJSON(lib.tlv.getOne(req.params.tag)));
 })
-.delete((req, res, next) => {
-  tlvLib.remove(req.params.tag);
+.delete(lib.auth.isAdmin, (req, res, next) => {
+  lib.tlv.remove(req.params.tag);
   res.end();
+});
+
+router.get('/request/tlv', (req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
+  const tlvs = lib.tlv.search(req.query.data, 1);
+  tlvs.map(tlv => lib.tlv.toJSON(tlv));
+  res.json(tlvs);
+});
+
+router.route('/request/tlv/:tag')
+.all((req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
+  if (!lib.tlv.isBytes.test(req.params.tag.trim()))
+    throw lib.error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
+  const tlv = lib.tlv.getOne(req.params.tag);
+  if (!tlv)
+    throw lib.error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
+  res.locals.tlv = tlv;
+  next();
+})
+.get((req, res, next) => {
+  res.json(lib.tlv.toJSON(res.locals.tlv));
+})
+.post(lib.auth.isUser, (req, res, next) => {
+  const update = Object.assign({}, req.body);
+  update.tag = req.params.tag;
+  update.isPublic = req.body.isPublic ? 1 : 0;
+  lib.tlv.request(update);
+  res.json(lib.tlv.toJSON(lib.tlv.getOne(req.params.tag)));
+})
+.delete(lib.auth.isUser, (req, res, next) => {
+  lib.tlv.remove(req.params.tag);
+  res.end();
+});
+
+router.get('/request/new', (req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
+  res.json({
+    primitive: lib.tlv.getNewPrimitive(),
+    constructed: lib.tlv.getNewConstructed()
+  })
 });
 
 router.use((err, req, res, next) => {

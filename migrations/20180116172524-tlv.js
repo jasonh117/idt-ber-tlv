@@ -29,7 +29,7 @@ exports.up = function (db) {
     createdAt: { type: 'datetime' },
     modifiedAt: { type: 'datetime' },
     timesRequested: { type: 'int', defaultValue: 0 },
-    exist: { type: 'boolean', defaultValue: 0 }
+    status: { type: 'int', defaultValue: 0 }
   });
 };
 

@@ -6,7 +6,34 @@ const router = express.Router();
 nconf.argv().env();
 const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
 
-router.route('/:tag')
+router.use(lib.auth.isUser);
+
+router.get('/', (req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
+  const tlvs = lib.tlv.search(req.query.data, 1);
+  tlvs.map(tlv => lib.tlv.toList(tlv));
+  res.render('request', {
+    title: 'ID TECH TLV',
+    tlvs,
+    search: req.query.data || '',
+    filter: req.query.filter
+  });
+});
+
+router.get('/new/primitive', (req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
+  res.redirect(`/request/tlv/${lib.tlv.getNewPrimitive()}`);
+});
+
+router.get('/new/constructed', (req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
+  res.redirect(`/request/tlv/${lib.tlv.getNewConstructed()}`);
+});
+
+router.route('/tlv/:tag')
 .all((req, res, next) => {
   const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
@@ -26,7 +53,7 @@ router.route('/:tag')
 })
 .get((req, res, next) => {
   const tlv = lib.tlv.toPrint(res.locals.tlv);
-  res.render('tlv', {
+  res.render('requestTLV', {
     title: `ID TECH TLV: ${req.params.tag.toUpperCase()}`,
     tlv,
     search: req.query.data || ''

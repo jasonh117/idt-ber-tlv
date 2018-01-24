@@ -1,6 +1,7 @@
 <%- include('header.ejs'); %>
 
 <div class="container main-container">
+  <h1 id="tlv-request-list-title">TLV Request List</h1>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -13,7 +14,7 @@
     </thead>
     <tbody>
       <% tlvs.forEach(function(tlv) { %>
-        <tr class="clickable-row" data-href="<%= 'tlv/' + tlv.tag.toString('hex') %>">
+        <tr class="clickable-row" data-href="<%= '/request/tlv/' + tlv.tag.toString('hex') %>">
           <td><%= tlv.tag %></td>
           <td><%= tlv.name %></td>
           <td><%= tlv.format %></td>
