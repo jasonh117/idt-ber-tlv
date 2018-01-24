@@ -4,7 +4,7 @@ $(function() {
         window.location = $(this).data("href");
     });
 
-    const form = $('form');
+    const form = $('#tlv-form');
     form.submit(false);
 
     const deleteButton = $('#delete-button');
