@@ -15,15 +15,10 @@ a {
   cursor: pointer;
 }
 
-#approve-button {
-  width: 100px;
-  vertical-align: middle;
-  margin-left: 10rem;
-}
-
 .tag-name {
   display: inline-block;
   margin: 0;
+  margin-right: 5rem;
 }
 
 .title-row {
@@ -31,7 +26,7 @@ a {
   align-items: center;
 }
 
-#delete-button, #cancel-button, #request-button {
+#delete-button, #cancel-button, #request-button, #approve-button {
   width: 100px;
   vertical-align: middle;
   margin-left: 2rem;

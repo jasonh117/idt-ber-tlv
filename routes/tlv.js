@@ -10,24 +10,26 @@ router.route('/:tag')
 .all((req, res, next) => {
   const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
-  if (lib.tlv.isBytes.test(req.params.tag.trim())) {
-    const tlv = lib.tlv.getOne(req.params.tag);
+  const tag = req.params.tag.trim().toUpperCase();
+  if (lib.tlv.isBytes.test(tag)) {
+    const tlv = lib.tlv.getOne(tag);
     if (tlv) {
       res.locals.tlv = tlv;
       next();
       return;
     }
   }
-  res.render('notlv', {
+  res.render('warning', {
     title: 'ID TECH TLV: Not Found',
-    tag: req.params.tag.toUpperCase(),
-    search: req.query.data || ''
+    tag,
+    search: req.query.data || '',
+    warning: `The tag ${tag} does not exist`
   });
 })
 .get((req, res, next) => {
   const tlv = lib.tlv.toPrint(res.locals.tlv);
   res.render('tlv', {
-    title: `ID TECH TLV: ${req.params.tag.toUpperCase()}`,
+    title: `ID TECH TLV: ${tlv.tag}`,
     tlv,
     search: req.query.data || ''
   });

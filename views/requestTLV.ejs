@@ -4,7 +4,9 @@
     <form class="list-group" method="post" >
         <div class="title-row">
             <h1 class="tag-name"><%= tlv.tag %></h1>
-            <button type="button" id="approve-button" class="btn btn-primary">Approve</button>
+            <% if (isAdmin) { %>
+                <button type="button" id="approve-button" class="btn btn-primary">Approve</button>
+            <% } %>
             <button type="button" id="request-button" class="btn btn-primary">Request</button>
             <button type="button" id="cancel-button" class="btn btn-primary">Cancel</button>
             <button type="button" id="delete-button" class="btn btn-primary">Delete</button>

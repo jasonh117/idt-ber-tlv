@@ -9,6 +9,14 @@ const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
 router.get('/tlv', (req, res, next) => {
   const visitor = ua(analyticsID);
   visitor.pageview(req.originalUrl).send();
+  const tlvs = lib.tlv.search(req.query.data, 2);
+  tlvs.map(tlv => lib.tlv.toJSON(tlv));
+  res.json(tlvs);
+});
+
+router.get('/tlv/all', (req, res, next) => {
+  const visitor = ua(analyticsID);
+  visitor.pageview(req.originalUrl).send();
   const tlvs = lib.tlv.search(req.query.data);
   tlvs.map(tlv => lib.tlv.toJSON(tlv));
   res.json(tlvs);
@@ -29,14 +37,14 @@ router.route('/tlv/:tag')
 .get((req, res, next) => {
   res.json(lib.tlv.toJSON(res.locals.tlv));
 })
-.post(lib.auth.isAdmin, (req, res, next) => {
+.post(lib.auth.isAdminApi, (req, res, next) => {
   const update = Object.assign({}, req.body);
   update.tag = req.params.tag;
   update.isPublic = req.body.isPublic ? 1 : 0;
   lib.tlv.add(update);
   res.json(lib.tlv.toJSON(lib.tlv.getOne(req.params.tag)));
 })
-.delete(lib.auth.isAdmin, (req, res, next) => {
+.delete(lib.auth.isAdminApi, (req, res, next) => {
   lib.tlv.remove(req.params.tag);
   res.end();
 });
@@ -64,14 +72,14 @@ router.route('/request/tlv/:tag')
 .get((req, res, next) => {
   res.json(lib.tlv.toJSON(res.locals.tlv));
 })
-.post(lib.auth.isUser, (req, res, next) => {
+.post(lib.auth.isUserApi, (req, res, next) => {
   const update = Object.assign({}, req.body);
   update.tag = req.params.tag;
   update.isPublic = req.body.isPublic ? 1 : 0;
   lib.tlv.request(update);
   res.json(lib.tlv.toJSON(lib.tlv.getOne(req.params.tag)));
 })
-.delete(lib.auth.isUser, (req, res, next) => {
+.delete(lib.auth.isUserApi, (req, res, next) => {
   lib.tlv.remove(req.params.tag);
   res.end();
 });
