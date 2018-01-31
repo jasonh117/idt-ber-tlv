@@ -62,7 +62,7 @@ router.route('/tlv/:tag')
     user: req.user,
     tlv,
     search: req.query.data || '',
-    isAdmin: res.locals.isAdmin
+    isAdmin: true // TODO: res.user.isAdmin
   });
   res.json();
 });
