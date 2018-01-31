@@ -8,6 +8,7 @@ const cors = require('cors');
 const Database = require('better-sqlite3');
 const passport = require('passport');
 const session = require('express-session');
+const env = require('get-env')();
 const nconf = require('nconf');
 nconf.argv().env();
 
@@ -50,7 +51,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  secret: nconf.get('SESSION_SECRET'),
+  secret: env === 'prod' ? nconf.get('SESSION_SECRET') : 'test_session',
   resave: false,
   saveUninitialized: false
 }));

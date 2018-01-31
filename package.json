@@ -17,6 +17,7 @@
     "ejs": "~2.5.7",
     "express": "~4.15.5",
     "express-session": "^1.15.6",
+    "get-env": "^0.5.10",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "morgan": "~1.9.0",
