@@ -23,13 +23,45 @@
       </div>
       <% if (user) { %>
         <span id="user-name">Welcome, <%= user ? user.name : '' %></span>
-        <a class="login-button" href="/auth/logout">Logout</a>
+        <a class="btn btn-outline-danger" href="#" role="button" href="/auth/logout">Logout</a>
       <% } else { %>
-        <a class="login-button" href="/auth/google">Google Login</a>
-        <a class="login-button" href="/auth/outlook">Outlook Login</a>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="login-button btn btn-outline-warning" data-toggle="modal" data-target="#loginModal"> Login </button>
+
+
       <% } %>
       <form class="form-inline" action="/">
         <input name="data" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="<%= search %>">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">User Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+        <div class="alert alert-info" role="alert">
+            <strong>Heads up!</strong> You must be logged in to make changes / review TLVs.
+          </div>
+
+        <a class="btn btn-outline-primary" href="/auth/google" role="button" href="/auth/google">Login with Google</a>
+        <a class="btn btn-outline-primary" href="/auth/outlook" role="button" href="/auth/outlook">Login with Outlook</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
