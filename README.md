@@ -14,6 +14,18 @@ npm install                       #installs all packages specified in package.js
 ## To Start Server
 ```bash
 yarn
-yarn run migrate
+yarn migrate
 yarn start
 ```
+
+## Environment Variables that needs to be set
+### Using Google login
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
+### Using Outlook login
+- OUTLOOK_CLIENT_ID
+- OUTLOOK_CLIENT_SECRET
+### Set session key when using production build
+- SESSION_SECRET
+### Optional
+- GOOGLE_ANALYTICS_ID
