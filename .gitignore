@@ -1,6 +1,7 @@
 .DS_Store
 *.db
 ecosystem.config.js
+.env
 
 # Logs
 logs

@@ -8,6 +8,7 @@ const cors = require('cors');
 const Database = require('better-sqlite3');
 const passport = require('passport');
 const session = require('express-session');
+require('dotenv').config();
 const env = require('get-env')();
 const nconf = require('nconf');
 nconf.argv().env();
