@@ -24,6 +24,7 @@
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "passport-outlook": "^2.1.0",
+    "require-all": "^2.2.0",
     "serve-favicon": "~2.4.5",
     "universal-analytics": "^0.4.16"
   }
