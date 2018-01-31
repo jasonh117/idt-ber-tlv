@@ -15,6 +15,7 @@ router.get('/', (req, res, next) => {
   tlvs.map(tlv => lib.tlv.toList(tlv));
   res.render('request', {
     title: 'ID TECH TLV',
+    user: req.user,
     tlvs,
     search: req.query.data || '',
     filter: req.query.filter
@@ -48,6 +49,7 @@ router.route('/tlv/:tag')
   }
   res.render('warning', {
     title: 'ID TECH TLV: Not Found',
+    user: req.user,
     tag,
     search: req.query.data || '',
     warning: `The tag ${tag} does not exist`
@@ -57,6 +59,7 @@ router.route('/tlv/:tag')
   const tlv = lib.tlv.toPrint(res.locals.tlv);
   res.render('requestTLV', {
     title: `ID TECH TLV: ${tlv.tag}`,
+    user: req.user,
     tlv,
     search: req.query.data || '',
     isAdmin: res.locals.isAdmin

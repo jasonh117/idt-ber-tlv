@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
   tlvs.map(tlv => lib.tlv.toList(tlv));
   res.render('index', {
     title: 'ID TECH TLV',
+    user: req.user,
     tlvs,
     search: req.query.data || '',
     filter: req.query.filter

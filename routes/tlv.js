@@ -21,6 +21,7 @@ router.route('/:tag')
   }
   res.render('warning', {
     title: 'ID TECH TLV: Not Found',
+    user: req.user,
     tag,
     search: req.query.data || '',
     warning: `The tag ${tag} does not exist`
@@ -30,6 +31,7 @@ router.route('/:tag')
   const tlv = lib.tlv.toPrint(res.locals.tlv);
   res.render('tlv', {
     title: `ID TECH TLV: ${tlv.tag}`,
+    user: req.user,
     tlv,
     search: req.query.data || ''
   });

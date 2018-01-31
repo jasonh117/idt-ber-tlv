@@ -21,6 +21,13 @@
           </li>
         </ul>
       </div>
+      <% if (user) { %>
+        <span id="user-name">Welcome, <%= user ? user.name : '' %></span>
+        <a class="login-button" href="/auth/logout">Logout</a>
+      <% } else { %>
+        <a class="login-button" href="/auth/google">Google Login</a>
+        <a class="login-button" href="/auth/outlook">Outlook Login</a>
+      <% } %>
       <form class="form-inline" action="/">
         <input name="data" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="<%= search %>">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

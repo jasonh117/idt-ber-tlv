@@ -6,6 +6,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Database = require('better-sqlite3');
+const passport = require('passport');
+const session = require('express-session');
+const nconf = require('nconf');
+nconf.argv().env();
 
 const db = new Database('./db/dev.db');
 const res = db.prepare('SELECT count(*) as count from tlv').get();
@@ -32,11 +36,6 @@ if (res.count <= 0) {
 db.close();
 console.log('Database OK');
 
-const index = require('./routes/index');
-const tlv = require('./routes/tlv');
-const api = require('./routes/api');
-const request = require('./routes/request');
-
 const app = express();
 
 // view engine setup
@@ -50,12 +49,20 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: nconf.get('SESSION_SECRET'),
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/tlv', tlv);
-app.use('/api', api);
-app.use('/request', request);
+app.use('/', require('./routes/index'));
+app.use('/tlv', require('./routes/tlv'));
+app.use('/api', require('./routes/api'));
+app.use('/request', require('./routes/request'));
+app.use('/auth', require('./routes/auth'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

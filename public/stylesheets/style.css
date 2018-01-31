@@ -56,3 +56,12 @@ a {
 #tag-status-2 {
   color: green;
 }
+
+#user-name {
+  color: white;
+  margin-right: 2rem;
+}
+
+.login-button {
+  margin-right: 2rem;
+}
