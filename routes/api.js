@@ -1,22 +1,14 @@
 const express = require('express');
-const nconf = require('nconf');
-const ua = require('universal-analytics');
 const lib = require('../lib');
 const router = express.Router();
-nconf.argv().env();
-const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
 
 router.get('/tlv', (req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   const tlvs = lib.tlv.search(req.query.data, 2);
   tlvs.map(tlv => lib.tlv.toJSON(tlv));
   res.json(tlvs);
 });
 
 router.get('/tlv/all', (req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   const tlvs = lib.tlv.search(req.query.data);
   tlvs.map(tlv => lib.tlv.toJSON(tlv));
   res.json(tlvs);
@@ -24,8 +16,6 @@ router.get('/tlv/all', (req, res, next) => {
 
 router.route('/tlv/:tag')
 .all((req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   if (!lib.tlv.isBytes.test(req.params.tag.trim()))
     throw lib.error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
   const tlv = lib.tlv.getOne(req.params.tag);
@@ -50,8 +40,6 @@ router.route('/tlv/:tag')
 });
 
 router.get('/request/tlv', (req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   const tlvs = lib.tlv.search(req.query.data, 1);
   tlvs.map(tlv => lib.tlv.toJSON(tlv));
   res.json(tlvs);
@@ -59,8 +47,6 @@ router.get('/request/tlv', (req, res, next) => {
 
 router.route('/request/tlv/:tag')
 .all((req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   if (!lib.tlv.isBytes.test(req.params.tag.trim()))
     throw lib.error(400, `Tag '${req.params.tag.trim()}' is not valid.`);
   const tlv = lib.tlv.getOne(req.params.tag);
@@ -85,8 +71,6 @@ router.route('/request/tlv/:tag')
 });
 
 router.get('/request/new', (req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   res.json({
     primitive: lib.tlv.getNewPrimitive(),
     constructed: lib.tlv.getNewConstructed()

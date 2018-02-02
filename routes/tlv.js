@@ -1,15 +1,9 @@
 const express = require('express');
-const nconf = require('nconf');
-const ua = require('universal-analytics');
 const lib = require('../lib');
 const router = express.Router();
-nconf.argv().env();
-const analyticsID = nconf.get('GOOGLE_ANALYTICS_ID');
 
 router.route('/:tag')
 .all((req, res, next) => {
-  const visitor = ua(analyticsID);
-  visitor.pageview(req.originalUrl).send();
   const tag = req.params.tag.trim().toUpperCase();
   if (lib.tlv.isBytes.test(tag)) {
     const tlv = lib.tlv.getOne(tag);
