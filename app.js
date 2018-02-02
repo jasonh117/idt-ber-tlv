@@ -8,7 +8,6 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const ua = require('universal-analytics');
-const requestIp = require('request-ip');
 const lib = require('./lib');
 const app = express();
 
@@ -27,14 +26,7 @@ app.use(session(lib.config.session));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(requestIp.mw())
-app.use((req, res, next) => {
-  if (lib.config.google.analyticsId) {
-    const visitor = ua(lib.config.google.analyticsId, req.clientIp);
-    visitor.pageview(req.originalUrl).send();
-  }
-  next();
-});
+app.use(ua.middleware(lib.config.google.analyticsId, { cookieName: '_ga' }));
 
 app.use('/', require('./routes/index'));
 app.use('/tlv', require('./routes/tlv'));
