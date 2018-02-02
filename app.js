@@ -27,6 +27,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(ua.middleware(lib.config.google.analyticsId, { cookieName: '_ga' }));
+app.use((req, res, next) => {
+  req.visitor.pageview(req.originalUrl).send();
+  next();
+});
 
 app.use('/', require('./routes/index'));
 app.use('/tlv', require('./routes/tlv'));
