@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <% tlvs.forEach(function(tlv) { %>
+      <% tlvs.forEach((tlv) => { %>
         <tr class="clickable-row" data-href="<%= 'tlv/' + tlv.tag.toString('hex') %>">
           <td><%= tlv.tag %></td>
           <td><%= tlv.name %></td>

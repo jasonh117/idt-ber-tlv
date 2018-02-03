@@ -2,6 +2,8 @@
 *.db
 ecosystem.config.js
 .env
+.vscode
+package-lock.json
 
 # Logs
 logs

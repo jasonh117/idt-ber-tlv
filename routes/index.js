@@ -1,5 +1,6 @@
 const express = require('express');
 const lib = require('../lib');
+
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -10,7 +11,7 @@ router.get('/', (req, res, next) => {
     user: req.user,
     tlvs,
     search: req.query.data || '',
-    filter: req.query.filter
+    filter: req.query.filter,
   });
 });
 
